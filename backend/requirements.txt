@@ -5,3 +5,8 @@ huggingface_hub
 pillow
 scikit-image
 matplotlib
+flask
+flask-cors
+uvicorn
+python-multipart
+numpy

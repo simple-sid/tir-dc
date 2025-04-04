@@ -1,50 +1,69 @@
-from flask import Flask, request, jsonify
-import torch
-from torchvision import transforms
+from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
+import os
 from PIL import Image
-import io
+import numpy as np
+from scripts.inference import colorize_image
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for the frontend to access the API
 
-# Load pre-trained CycleGAN model for TIR to RGB conversion
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = torch.hub.load("pytorch/vision", "cycle_gan", "thermal2rgb.pth")
-model.to(device).eval()
+# Ensure data directory exists
+os.makedirs("data", exist_ok=True)
+os.makedirs("output", exist_ok=True)  # Create output directory for processed images
 
-# Preprocessing function
-def preprocess_image(image_bytes):
-    image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    transform = transforms.Compose([
-        transforms.Resize((256, 256)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))
-    ])
-    return transform(image).unsqueeze(0).to(device)
+@app.route("/", methods=["GET"])
+def home():
+    """Test route to check if the server is running"""
+    return jsonify({"message": "PearlGAN API is running"}), 200
 
-# Function to convert TIR to RGB
-def convert_tir_to_rgb(image_bytes):
-    input_tensor = preprocess_image(image_bytes)
-    with torch.no_grad():
-        output_tensor = model(input_tensor)
-    output_image = transforms.ToPILImage()(output_tensor.squeeze(0).cpu())
-    return output_image
-
-# Flask route for image processing
 @app.route("/convert", methods=["POST"])
 def convert_image():
+    """Process uploaded thermal image and return colorized version"""
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
     
     file = request.files["file"]
-    image_bytes = file.read()
-
-    # Convert image
-    output_image = convert_tir_to_rgb(image_bytes)
-
-    # Save output image
-    output_image.save("output_rgb.jpg")
     
-    return jsonify({"message": "Image processed successfully", "output": "output_rgb.jpg"}), 200
+    if file.filename == '':
+        return jsonify({"error": "No file selected"}), 400
+    
+    # Save the uploaded file temporarily
+    temp_path = os.path.join("data", "temp_input.jpg")
+    file.save(temp_path)
+    
+    try:
+        # Process the image using your existing colorize_image function
+        colorized_images = colorize_image(temp_path)
+        
+        # Convert the first colorized image to PIL Image and save
+        colorized_img = colorized_images[0]
+        
+        # If the image has values between 0-1, scale to 0-255
+        if np.max(colorized_img) <= 1.0:
+            colorized_img = (colorized_img * 255).astype(np.uint8)
+        
+        img = Image.fromarray(colorized_img)
+        output_path = os.path.join("output", "output_rgb.jpg")
+        img.save(output_path)
+        
+        return jsonify({
+            "message": "Image processed successfully", 
+            "output": "/get_image/output_rgb.jpg"
+        }), 200
+        
+    except Exception as e:
+        print(f"Error processing image: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/get_image/<filename>", methods=["GET"])
+def get_image(filename):
+    """Serve the processed image"""
+    try:
+        return send_file(os.path.join("output", filename), mimetype='image/jpeg')
+    except Exception as e:
+        print(f"Error serving image: {str(e)}")
+        return jsonify({"error": f"Image not found: {str(e)}"}), 404
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

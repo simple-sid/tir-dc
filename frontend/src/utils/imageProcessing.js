@@ -1,13 +1,31 @@
-// Simulated image processing utility
-// In a real-world scenario, this would make an API call to your backend
+// Real implementation that connects to your Flask backend
 
 export async function processImage(file) {
-    // Simulate processing delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-  
-    // In a real implementation, you'd send the file to your backend
+  try {
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    // Send the request to your Flask backend
+    const response = await fetch('http://localhost:5000/convert', {
+      method: 'POST',
+      body: formData,
+    });
+    
+    // Parse the response
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to process image');
+    }
+    
+    // Construct the full URL to the processed image
+    const colorizedImageUrl = `http://localhost:5000${data.output}`;
+    
+    // Return the colorized image URL and some mock metrics
+    // (you can replace these with real metrics from your backend if available)
     return {
-      colorizedImage: file ? URL.createObjectURL(file) : null,
+      colorizedImage: colorizedImageUrl,
       metrics: {
         apce: 0.85, // Average Precision of Canny Edges
         semanticAccuracy: 0.92,
@@ -15,14 +33,17 @@ export async function processImage(file) {
         edgePreservation: 0.90
       }
     };
+  } catch (error) {
+    console.error('Error processing image:', error);
+    throw error;
   }
-  
-  // Helper function to convert file to base64
-  export function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-    });
-  }
+}
+
+export function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
