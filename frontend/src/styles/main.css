@@ -1,0 +1,196 @@
+/* Global styles */
+body {
+    background-color: #F3F4F6;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #111827;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Layout */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  
+  /* Padding & Margin */
+  .p-2 { padding: 0.5rem; }
+  .p-4 { padding: 1rem; }
+  .p-6 { padding: 1.5rem; }
+  .p-8 { padding: 2rem; }
+  .p-10 { padding: 2.5rem; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+  
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-4 { margin-top: 1rem; }
+  .mb-1 { margin-bottom: 0.25rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-4 { margin-bottom: 1rem; }
+  .mb-8 { margin-bottom: 2rem; }
+  .mb-12 { margin-bottom: 3rem; }
+  .my-8 { margin-top: 2rem; margin-bottom: 2rem; }
+  .mr-2 { margin-right: 0.5rem; }
+  .mr-3 { margin-right: 0.75rem; }
+  .ml-3 { margin-left: 0.75rem; }
+  
+  .max-w-4xl { max-width: 56rem; }
+  .max-w-2xl { max-width: 42rem; }
+  .max-w-full { max-width: 100%; }
+  .max-h-full { max-height: 100%; }
+  
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  
+  /* Typography */
+  .text-sm { font-size: 0.875rem; }
+  .text-lg { font-size: 1.125rem; }
+  .text-xl { font-size: 1.25rem; }
+  .text-2xl { font-size: 1.5rem; }
+  .text-4xl { font-size: 2.25rem; }
+  
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
+  
+  .text-center { text-align: center; }
+  .capitalize { text-transform: capitalize; }
+  
+  /* Colors */
+  .text-white { color: #fff; }
+  .text-gray-500 { color: #6B7280; }
+  .text-gray-600 { color: #4B5563; }
+  .text-gray-700 { color: #374151; }
+  .text-thermal-primary { color: #1E40AF; }
+  
+  .bg-white { background-color: #fff; }
+  .bg-black\/80 { background-color: rgba(0, 0, 0, 0.8); }
+  .bg-white\/70 { background-color: rgba(255, 255, 255, 0.7); }
+  .bg-gray-100 { background-color: #F3F4F6; }
+  .bg-gray-200 { background-color: #E5E7EB; }
+  .bg-blue-50 { background-color: #EFF6FF; }
+  .bg-thermal-primary { background-color: #1E40AF; }
+  .bg-thermal-secondary { background-color: #10B981; }
+  .bg-thermal-background { background-color: #F3F4F6; }
+  
+  /* Border */
+  .border-2 { border-width: 2px; border-style: solid; }
+  .border-dashed { border-style: dashed; }
+  .rounded { border-radius: 0.25rem; }
+  .rounded-lg { border-radius: 0.5rem; }
+  .rounded-full { border-radius: 9999px; }
+  
+  .border-gray-200 { border-color: #E5E7EB; }
+  .border-gray-300 { border-color: #D1D5DB; }
+  .border-thermal-primary { border-color: #1E40AF; }
+  
+  /* Shadow */
+  .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  .shadow-thermal-card { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  
+  /* Flex */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .justify-between { justify-content: space-between; }
+  .space-x-2 > * + * { margin-left: 0.5rem; }
+  
+  /* Grid */
+  .grid { display: grid; }
+  .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gap-4 { gap: 1rem; }
+  .gap-8 { gap: 2rem; }
+  
+  /* Positioning */
+  .fixed { position: fixed; }
+  .absolute { position: absolute; }
+  .relative { position: relative; }
+  .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+  .top-1\/2 { top: 50%; }
+  .left-1\/2 { left: 50%; }
+  .top-2 { top: 0.5rem; }
+  .right-2 { right: 0.5rem; }
+  .-translate-x-1\/2 { transform: translateX(-50%); }
+  .-translate-y-1\/2 { transform: translateY(-50%); }
+  
+  /* Sizes */
+  .w-full { width: 100%; }
+  .h-full { height: 100%; }
+  .h-auto { height: auto; }
+  .w-1 { width: 0.25rem; }
+  
+  /* Overflow */
+  .overflow-hidden { overflow: hidden; }
+  
+  /* Z-index */
+  .z-50 { z-index: 50; }
+  
+  /* Cursor */
+  .cursor-pointer { cursor: pointer; }
+  
+  /* Animation */
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Transitions */
+  .transition-colors { transition-property: color, background-color, border-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+  .transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+  .transition-shadow { transition-property: box-shadow; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+  .duration-200 { transition-duration: 200ms; }
+  .duration-300 { transition-duration: 300ms; }
+  .ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+  
+  /* Opacity */
+  .opacity-0 { opacity: 0; }
+  .opacity-50 { opacity: 0.5; }
+  .opacity-100 { opacity: 1; }
+  
+  /* Background */
+  .bg-cover { background-size: cover; }
+  .bg-center { background-position: center; }
+  
+  /* Object */
+  .object-cover { object-fit: cover; }
+  .object-contain { object-fit: contain; }
+  
+  /* Aspect ratio */
+  .aspect-video { aspect-ratio: 16 / 9; }
+  
+  /* Hover states */
+  .hover\:border-thermal-primary:hover { border-color: #1E40AF; }
+  .hover\:bg-thermal-secondary:hover { background-color: #10B981; }
+  .hover\:bg-gray-200:hover { background-color: #E5E7EB; }
+  .hover\:shadow-lg:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  
+  .group:hover .group-hover\:opacity-100 { opacity: 1; }
+  
+  /* Media queries */
+  @media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:col-span-1 { grid-column: span 1 / span 1; }
+  }
+
+  /* Main CSS styles */
+
+/* Background image styles */
+/* Alternative gradient background without image */
+.bg-thermal-gradient {
+  background: linear-gradient(135deg, #333ed4, #7c86d9, #cee8f3);
+}
+

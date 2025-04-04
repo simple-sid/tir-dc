@@ -1,0 +1,7 @@
+torch
+torchvision
+fastai
+huggingface_hub
+pillow
+scikit-image
+matplotlib
